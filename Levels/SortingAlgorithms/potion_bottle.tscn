@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://dqhhoxopf63s"]
+
+[ext_resource type="Script" uid="uid://d2m0ca3bj7ggn" path="res://Levels/SortingAlgorithms/potion_bottle.gd" id="1_ykv7n"]
+[ext_resource type="Texture2D" uid="uid://dm4skddxrkkc0" path="res://Assets/Pixel Potion Pack - FINISHED/Glowing Potion/LIME/Sprite/Glowing Potion - LIME - 0001.png" id="2_pe1t0"]
+
+[node name="PotionBottle" type="Control"]
+custom_minimum_size = Vector2(100, 150)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_ykv7n")
+
+[node name="Icon" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_pe1t0")
+stretch_mode = 5
+
+[node name="ValueLabel" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
