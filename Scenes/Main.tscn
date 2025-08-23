@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://5gtjure6ml1i"]
+
+[ext_resource type="Script" uid="uid://bd62a6kcbu3iy" path="res://Scripts/main.gd" id="1_rgh2o"]
+[ext_resource type="Texture2D" uid="uid://drjfnc03fanaq" path="res://Assets/Background_Images/Background.png" id="2_rgh2o"]
+[ext_resource type="Texture2D" uid="uid://cjjw7qhpuatnu" path="res://Assets/UI/Pressed.png" id="3_kln2b"]
+[ext_resource type="Texture2D" uid="uid://d03bwxna2o065" path="res://Assets/UI/play1.png" id="3_rgh2o"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+script = ExtResource("1_rgh2o")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 781.0
+texture = ExtResource("2_rgh2o")
+expand_mode = 1
+
+[node name="TextureButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 456.0
+offset_top = 334.0
+offset_right = 734.0
+offset_bottom = 506.0
+texture_normal = ExtResource("3_rgh2o")
+texture_pressed = ExtResource("3_kln2b")
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]

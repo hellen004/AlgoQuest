@@ -1,0 +1,103 @@
+[gd_scene load_steps=8 format=3 uid="uid://ddetl628bo4n7"]
+
+[ext_resource type="Script" uid="uid://dr4qxdmaqn6x3" path="res://Scenes/levels/BubbleSort/bubble_sort.gd" id="1_g2ydv"]
+[ext_resource type="Texture2D" uid="uid://be1d70evrelvk" path="res://Assets/Background_Images/BS_Background.png" id="1_hwbvs"]
+[ext_resource type="PackedScene" uid="uid://ei4hr7jixdcp" path="res://Scenes/levels/Elements/number_element.tscn" id="2_d6r8p"]
+[ext_resource type="Texture2D" uid="uid://dm1tedbfsudqf" path="res://Assets/UI/reset_button.png" id="2_qskr0"]
+[ext_resource type="FontFile" uid="uid://c3gsrcg7ch1v3" path="res://Assets/fonts/Heraldic Shadows.otf" id="3_ie40d"]
+[ext_resource type="Texture2D" uid="uid://bc25lhrfa1qv0" path="res://Assets/UI/Back_bautton.png" id="4_g2ydv"]
+[ext_resource type="Texture2D" uid="uid://bbao285qtpkbm" path="res://Assets/AlgoWiz.png" id="5_5ewd6"]
+
+[node name="BubbleSort" type="Node2D"]
+script = ExtResource("1_g2ydv")
+number_element_scene = ExtResource("2_d6r8p")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_top = -150.0
+offset_right = 1286.0
+offset_bottom = 789.0
+texture = ExtResource("1_hwbvs")
+expand_mode = 1
+
+[node name="UIElements" type="CanvasLayer" parent="."]
+
+[node name="UIContainer" type="Label" parent="UIElements"]
+offset_right = 1289.0
+offset_bottom = 726.0
+
+[node name="ResetButton" type="TextureButton" parent="UIElements/UIContainer"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 620.0
+offset_right = 149.0
+offset_bottom = 710.0
+texture_normal = ExtResource("2_qskr0")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="BackButton" type="TextureButton" parent="UIElements/UIContainer"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 149.0
+offset_bottom = 154.0
+texture_normal = ExtResource("4_g2ydv")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="TimerLabel" type="Label" parent="UIElements/UIContainer"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.788
+anchor_top = 0.011
+anchor_right = 0.788
+anchor_bottom = 0.011
+offset_left = 0.267944
+offset_top = 0.0139995
+offset_right = 265.268
+offset_bottom = 67.014
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_ie40d")
+theme_override_font_sizes/font_size = 32
+text = "Timer"
+
+[node name="AlgoWiz" type="Sprite2D" parent="."]
+position = Vector2(136.125, 467)
+scale = Vector2(0.3845, 0.512)
+texture = ExtResource("5_5ewd6")
+
+[node name="ElementContainer" type="Node2D" parent="."]
+position = Vector2(300, 563)
+
+[node name="DialogBox" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 199.0
+offset_top = 95.0
+offset_right = 822.0
+offset_bottom = 322.0
+
+[node name="Label" type="Label" parent="DialogBox"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.17
+anchor_top = 0.872
+anchor_right = -0.17
+anchor_bottom = 0.872
+offset_left = -0.0899963
+offset_top = 0.0559845
+offset_right = 507.91
+offset_bottom = 79.056
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_ie40d")
+theme_override_font_sizes/font_size = 40
+text = "Abcdefghijklmnopqrstuvwx"
+
+[connection signal="pressed" from="UIElements/UIContainer/ResetButton" to="." method="_on_reset_button_pressed"]
+[connection signal="pressed" from="UIElements/UIContainer/BackButton" to="." method="_on_back_button_pressed"]

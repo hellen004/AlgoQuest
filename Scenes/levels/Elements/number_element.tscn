@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://ei4hr7jixdcp"]
+
+[ext_resource type="Texture2D" uid="uid://blf6h6rxy5xn1" path="res://Assets/block1.png" id="1_asfln"]
+[ext_resource type="Script" uid="uid://cf6encftd4m74" path="res://Scenes/levels/Elements/number_element.gd" id="1_c3ma8"]
+
+[node name="NumberElement" type="Area2D"]
+script = ExtResource("1_c3ma8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1, -2)
+scale = Vector2(1.63934, 1.52727)
+texture = ExtResource("1_asfln")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(-5.17599, 4.8678)
+scale = Vector2(0.990132, 1.00237)
+polygon = PackedVector2Array(-15.9817, -49.7499, 56.7359, -48.7523, 57.7458, 20.0846, 34.5166, 36.0468, -45.2707, 34.0515, -48.3006, -33.7877)
+
+[node name="Label" type="Label" parent="."]
+offset_left = -49.0
+offset_top = -30.0
+offset_right = 23.0
+offset_bottom = 36.0
+theme_override_font_sizes/font_size = 36
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
