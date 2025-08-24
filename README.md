@@ -24,7 +24,7 @@ AlgoQuest helps students understand fundamental algorithms through visual, inter
 
 - [x] Bubble Sort
 - [ ] Selection Sort (planned)
-- [ ] Merge Sort (planned)
+- [ ] Linear Search (planned)
 - [ ] Binary Search (planned)
 - [ ] Graph Traversal (planned)
 
