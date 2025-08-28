@@ -1,16 +1,20 @@
-ea4bc82a6ad023ab7ee23ee620429895
-::res://::1755954382
+fc8a56933c4b1c8d796fdb8f7a9f9475
+::res://::1756337121
+export_presets.cfg::TextFile/TextFile::-1::1755957882::0::1::::<><><>0<>0<><>::
 icon.svg::CompressedTexture2D/CompressedTexture2D::4014448157555237903::1754778799::1754778815::1::::<><><>0<>0<>2cc2c79282c0fb7158ae08ef68afae76<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
-::res://Assets/::1755897626
+::res://Assets/::1756197406
 AlgoWiz.png::CompressedTexture2D/CompressedTexture2D::2457509562032941694::1755558206::1755558206::1::::<><><>0<>0<>03933c03d6e5b50470410ddcb449c0ac<>res://.godot/imported/AlgoWiz.png-b6328a3e64b3279816e91b62f38962b2.ctex::
 block1.png::CompressedTexture2D/CompressedTexture2D::3170716235378673344::1755854597::1755854598::1::::<><><>0<>0<>35adba122abc9b368cb2de22a5f0674b<>res://.godot/imported/block1.png-a4b1e5e116eb4ab4cdd50dc13333bee0.ctex::
 block2.png::CompressedTexture2D/CompressedTexture2D::5676840697939389515::1755853442::1755853666::1::::<><><>0<>0<>2969443545a878a9f40b59402426f8ac<>res://.godot/imported/block2.png-7bd02a4365d696fb6b8aa8cf74c07182.ctex::
 block3.png::CompressedTexture2D/CompressedTexture2D::4468951643958839913::1755853458::1755853666::1::::<><><>0<>0<>fce40129f179f4d80a8c4b3abd8f764d<>res://.godot/imported/block3.png-e4fec2065c495b54065a956f78532d45.ctex::
 block4.png::CompressedTexture2D/CompressedTexture2D::3853893809375408347::1755853576::1755853666::1::::<><><>0<>0<>7f44a2ddcd81cb5bd0d1a1e3d6179a38<>res://.godot/imported/block4.png-65ae16dffe7148a6dda05ed9879c49b5.ctex::
 block5.png::CompressedTexture2D/CompressedTexture2D::8068191893596842418::1755853659::1755853666::1::::<><><>0<>0<>95e24341bdc663fc0e06721d7ead4919<>res://.godot/imported/block5.png-3f6ea7d14a83bc220c928ae8f2a2fa85.ctex::
-::res://Assets/Background_Images/::1755954460
-Background.png::CompressedTexture2D::8371378737942686932::1755552742::1755954468::1::::<><><>0<>0<>946a762e023e3b3d6911a73d6449875e<>res://.godot/imported/Background.png-82502f1913136e8352a369b6155d678c.ctex::
+Chest_closed.png::CompressedTexture2D/CompressedTexture2D::7767106493798778708::1756197400::1756197406::1::::<><><>0<>0<>c69fe218fa3d8b399db324a5fa19acb2<>res://.godot/imported/Chest_closed.png-d6a6ba73b9ffcd1789d827af58bcef62.ctex::
+Chest_open.png::CompressedTexture2D/CompressedTexture2D::5369925770645072809::1756197376::1756197406::1::::<><><>0<>0<>3ced8139c424280fc8a2420bfba8415d<>res://.godot/imported/Chest_open.png-61b355d73346bdfa34644bccf307ce18.ctex::
+::res://Assets/Background_Images/::1756198425
+Background.png::CompressedTexture2D/CompressedTexture2D::8371378737942686932::1755552742::1755954468::1::::<><><>0<>0<>946a762e023e3b3d6911a73d6449875e<>res://.godot/imported/Background.png-82502f1913136e8352a369b6155d678c.ctex::
 BS_Background.png::CompressedTexture2D/CompressedTexture2D::2721090496474044368::1755643415::1755643416::1::::<><><>0<>0<>8703defe7f3bec142cacbab54e52b353<>res://.godot/imported/BS_Background.png-7272165f7637fa2eeec28d64fdba1fb4.ctex::
+LS_backgroung.png::CompressedTexture2D/CompressedTexture2D::6327819086870529044::1756198306::1756198425::1::::<><><>0<>0<>c37d20e709eb12e9d88017f661a434ca<>res://.godot/imported/LS_backgroung.png-43afdb29b4159b23fde70bdd0bb770c0.ctex::
 ::res://Assets/fonts/::1755898577
 1001fonts-heraldic-shadows-eula.txt::TextFile/TextFile::-1::1738287388::0::1::::<><><>0<>0<><>::
 Heraldic Shadows.otf::FontFile/FontFile::6751638635914086054::1735999508::1755898577::1::::<><><>0<>0<>7c7eb101461d3f3026175a47cc150caa<>res://.godot/imported/Heraldic Shadows.otf-eb5d2654eb5fab434d56c1dfe425b6c2.fontdata::
@@ -27,18 +31,19 @@ pause_button.png::CompressedTexture2D/CompressedTexture2D::6453084398826514148::
 play1.png::CompressedTexture2D/CompressedTexture2D::8971886951758632704::1755556654::1755556679::1::::<><><>0<>0<>25400ac1821a248a67de83306d7e4712<>res://.godot/imported/play1.png-837792d949aab1b1f454a399303dd03f.ctex::
 Pressed.png::CompressedTexture2D/CompressedTexture2D::5424514131056364154::1755556676::1755556679::1::::<><><>0<>0<>11962c4d68cff2e2402940830020b7b6<>res://.godot/imported/Pressed.png-566ebfe0e7ba775fb5c1350f7fd7da25.ctex::
 reset_button.png::CompressedTexture2D/CompressedTexture2D::8056362921746304465::1755646360::1755647146::1::::<><><>0<>0<>85f80cd593a9c5cea5ce4d06c7396b12<>res://.godot/imported/reset_button.png-634318067bc8843f3a31e29a1ef63cb8.ctex::
-::res://Scenes/::1755953755
-level_selection.tscn::PackedScene::121420264061665208::1755953070::0::1::::<><><>0<>0<><>::uid://dxwif2mlmwh0e::::res://Scripts/level_selection.gd<>uid://dpqpblw7ltjiv::::res://Assets/UI/BS1.png<>uid://d3vgr4eywrl3k::::res://Assets/UI/BS2.png<>uid://chaxcv30ddq1d::::res://Assets/Background_Images/Gemini_Generated_Image_nsfovnnsfovnnsfo.png<>uid://b26s1f7in17kh::::res://Assets/UI/LS1.png<>uid://bqafq6i3fb2ve::::res://Assets/UI/LS2.png
-Main.tscn::PackedScene::2119222347625368376::1755953070::0::1::::<><><>0<>0<><>::uid://chaxcv30ddq1d::::res://Assets/Background_Images/Gemini_Generated_Image_nsfovnnsfovnnsfo.png<>uid://bd62a6kcbu3iy::::res://Scripts/main.gd<>uid://cjjw7qhpuatnu::::res://Assets/UI/Pressed.png<>uid://d03bwxna2o065::::res://Assets/UI/play1.png
+::res://Scenes/::1756199524
+level_selection.tscn::PackedScene/PackedScene::121420264061665208::1755976458::0::1::::<><><>0<>0<><>::uid://dxwif2mlmwh0e::::res://Scripts/level_selection.gd<>uid://dpqpblw7ltjiv::::res://Assets/UI/BS1.png<>uid://d3vgr4eywrl3k::::res://Assets/UI/BS2.png<>uid://drjfnc03fanaq::::res://Assets/Background_Images/Background.png<>uid://b26s1f7in17kh::::res://Assets/UI/LS1.png<>uid://bqafq6i3fb2ve::::res://Assets/UI/LS2.png
+Main.tscn::PackedScene/PackedScene::2119222347625368376::1755976458::0::1::::<><><>0<>0<><>::uid://bd62a6kcbu3iy::::res://Scripts/main.gd<>uid://drjfnc03fanaq::::res://Assets/Background_Images/Background.png<>uid://cjjw7qhpuatnu::::res://Assets/UI/Pressed.png<>uid://d03bwxna2o065::::res://Assets/UI/play1.png
+TreasureChest.tscn::PackedScene/PackedScene::5683231481542257807::1756199524::0::1::::<><><>0<>0<><>::uid://diwpdygulbkwi::::res://Assets/Chest_closed.png
 ::res://Scenes/levels/::1755643793
-::res://Scenes/levels/BubbleSort/::1755953737
-bubble_sort.gd::GDScript::8413352069067295630::1755953687::0::1::::<>Node2D<><>0<>0<><>::
-bubble_sort.tscn::PackedScene::7379261031040019374::1755953737::0::1::::<><><>0<>0<><>::uid://dr4qxdmaqn6x3::::res://Scenes/levels/BubbleSort/bubble_sort.gd<>uid://be1d70evrelvk::::res://Assets/Background_Images/BS_Background.png<>uid://ei4hr7jixdcp::::res://Scenes/levels/Elements/number_element.tscn<>uid://dm1tedbfsudqf::::res://Assets/UI/reset_button.png<>uid://c3gsrcg7ch1v3::::res://Assets/fonts/Heraldic Shadows.otf<>uid://bc25lhrfa1qv0::::res://Assets/UI/Back_bautton.png<>uid://bbao285qtpkbm::::res://Assets/AlgoWiz.png
-::res://Scenes/levels/Elements/::1755953070
+::res://Scenes/levels/BubbleSort/::1756337108
+bubble_sort.gd::GDScript/GDScript::8413352069067295630::1755976456::0::1::::<>Node2D<><>0<>0<><>::
+bubble_sort.tscn::PackedScene::7379261031040019374::1756337108::0::1::::<><><>0<>0<><>::uid://dr4qxdmaqn6x3::::res://Scenes/levels/BubbleSort/bubble_sort.gd<>uid://be1d70evrelvk::::res://Assets/Background_Images/BS_Background.png<>uid://ei4hr7jixdcp::::res://Scenes/levels/Elements/number_element.tscn<>uid://dm1tedbfsudqf::::res://Assets/UI/reset_button.png<>uid://c3gsrcg7ch1v3::::res://Assets/fonts/Heraldic Shadows.otf<>uid://bc25lhrfa1qv0::::res://Assets/UI/Back_bautton.png<>uid://bbao285qtpkbm::::res://Assets/AlgoWiz.png
+::res://Scenes/levels/Elements/::1755976458
 number_element.gd::GDScript/GDScript::5188047492883205829::1755859407::0::1::::<>Area2D<><>0<>0<><>::
-number_element.tscn::PackedScene::299044632683380279::1755953070::0::1::::<><><>0<>0<><>::uid://blf6h6rxy5xn1::::res://Assets/block1.png<>uid://cf6encftd4m74::::res://Scenes/levels/Elements/number_element.gd
-::res://Scenes/levels/LinearSearch/::1755953070
-linear_search.tscn::PackedScene::7570645528565176432::1755953070::0::1::::<><><>0<>0<><>::
+number_element.tscn::PackedScene/PackedScene::299044632683380279::1755976458::0::1::::<><><>0<>0<><>::uid://blf6h6rxy5xn1::::res://Assets/block1.png<>uid://cf6encftd4m74::::res://Scenes/levels/Elements/number_element.gd
+::res://Scenes/levels/LinearSearch/::1756337108
+linear_search.tscn::PackedScene::7570645528565176432::1756337108::0::1::::<><><>0<>0<><>::uid://cwfiix1eaf8g3::::res://Assets/Background_Images/LS_backgroung.png
 ::res://Scripts/::1755649241
 level_selection.gd::GDScript/GDScript::8819517867439825474::1755649241::0::1::::<>Control<><>0<>0<><>::
 main.gd::GDScript/GDScript::2662623927552670344::1755556559::0::1::::<>Control<><>0<>0<><>::
