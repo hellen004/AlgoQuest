@@ -1,3 +1,4 @@
+#number_element scene
 extends Area2D
 
 @onready var number_label: Label = $Label

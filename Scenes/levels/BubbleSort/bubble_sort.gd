@@ -21,6 +21,12 @@ var moves_count: int = 0
 var is_interactive: bool = false
 var debug_color_rects: Array[ColorRect] = []
 
+# Bubble Sort state tracking
+var current_pass: int = 0
+var next_expected_index: int = 0  # The index we expect player to start from
+var swaps_made_this_pass: int = 0
+var is_pass_complete: bool = false
+
 # ---------------- Timer / Best-time state ----------------
 var timer_label: Label = null  # Optional HUD label: UIElements/UIContainer/TimerLabel
 var puzzle_start_ms: int = 0
@@ -54,6 +60,12 @@ func generate_new_puzzle() -> void:
 	puzzle_elapsed_ms = 0
 	update_timer_label(0)
 
+	# Reset bubble sort state
+	current_pass = 0
+	next_expected_index = 0
+	swaps_made_this_pass = 0
+	is_pass_complete = false
+
 	# Generate unique random numbers
 	current_array.clear()
 	while current_array.size() < ARRAY_SIZE:
@@ -73,6 +85,7 @@ func generate_new_puzzle() -> void:
 		element.set_random_texture()
 
 	moves_count = 0
+	highlight_expected_pair()
 
 func clear_elements() -> void:
 	for element in number_elements:
@@ -81,6 +94,18 @@ func clear_elements() -> void:
 	for rect in debug_color_rects:
 		rect.queue_free()
 	debug_color_rects.clear()
+
+func highlight_expected_pair() -> void:
+	# Clear all highlights first
+	for element in number_elements:
+		element.highlight(false)
+	
+	# Highlight the next expected pair if we're not done
+	if next_expected_index < ARRAY_SIZE - 1 - current_pass and next_expected_index < number_elements.size() - 1:
+		if number_elements[next_expected_index] and is_instance_valid(number_elements[next_expected_index]):
+			number_elements[next_expected_index].modulate = Color(1.2, 1.2, 0.8)  # Slight yellow tint
+		if number_elements[next_expected_index + 1] and is_instance_valid(number_elements[next_expected_index + 1]):
+			number_elements[next_expected_index + 1].modulate = Color(1.2, 1.2, 0.8)
 
 func _on_element_clicked(element: Area2D) -> void:
 	if not is_interactive:
@@ -98,23 +123,79 @@ func _on_element_clicked(element: Area2D) -> void:
 		var first_index = min(selected_element.element_index, element.element_index)
 		var second_index = max(selected_element.element_index, element.element_index)
 
+		# Check if they selected adjacent elements
 		if second_index - first_index != 1:
 			await show_dialog("You can only swap adjacent pairs!")
 			selected_element.highlight(false)
 			selected_element = null
 			return
 
+		# BUBBLE SORT LOGIC: Check if they're starting from the correct position
+		if first_index != next_expected_index:
+			var pass_text = ""
+			if current_pass == 0:
+				pass_text = "first pass"
+			else:
+				pass_text = "pass " + str(current_pass + 1)
+			
+			await show_dialog("In Bubble Sort, you must start from the beginning!\nFor the " + pass_text + ", start comparing from index 0.")
+			selected_element.highlight(false)
+			selected_element = null
+			return
+
+		# Check if swap is needed
 		var val1 = current_array[first_index]
 		var val2 = current_array[second_index]
+		
 		if val1 > val2:
+			# Swap needed
 			swap_elements(first_index, second_index)
+			swaps_made_this_pass += 1
 			moves_count += 1
-			check_win_condition()
 		else:
-			await show_dialog("Already in order - no swap needed!")
+			# No swap needed, but still valid move in bubble sort
+			await show_dialog("Good! These elements are already in order.")
+
+		# Move to next expected index
+		next_expected_index += 1
+		
+		# Check if we've completed this pass
+		var max_index_for_pass = ARRAY_SIZE - 1 - current_pass
+		if next_expected_index >= max_index_for_pass:
+			await complete_pass()
+		else:
+			highlight_expected_pair()
 
 		selected_element.highlight(false)
 		selected_element = null
+
+func complete_pass() -> void:
+	current_pass += 1
+	
+	# Clear highlights
+	for element in number_elements:
+		element.modulate = Color.WHITE
+	
+	if swaps_made_this_pass == 0:
+		# No swaps made - array is sorted!
+		await show_dialog("Pass " + str(current_pass) + " complete with no swaps!\nArray is sorted!")
+		check_win_condition()
+	elif is_array_sorted():
+		# Array happens to be sorted
+		await show_dialog("Pass " + str(current_pass) + " complete!\nArray is now sorted!")
+		check_win_condition()
+	else:
+		# Continue to next pass
+		await show_dialog("Pass " + str(current_pass) + " complete!\nStarting pass " + str(current_pass + 1) + "...")
+		next_expected_index = 0
+		swaps_made_this_pass = 0
+		highlight_expected_pair()
+
+func is_array_sorted() -> bool:
+	for i in range(current_array.size() - 1):
+		if current_array[i] > current_array[i + 1]:
+			return false
+	return true
 
 func swap_elements(i: int, j: int) -> void:
 	var temp = current_array[i]
@@ -158,24 +239,18 @@ func animate_arc(progress: float, element: Area2D, start_pos: Vector2, end_pos: 
 	element.scale = Vector2(scale_factor, scale_factor)
 
 func check_win_condition() -> void:
-	var sorted_array = current_array.duplicate()
-	sorted_array.sort()
-
-	if current_array == sorted_array:
+	if is_array_sorted():
 		is_interactive = false
 		var elapsed_ms = stop_puzzle_timer()
 
 		# Build win message with timing + best
-		var message := "Well done! You've sorted the array using Bubble Sort.
-Time: %s" % format_ms(elapsed_ms)
+		var message := "Excellent! You've sorted the array using proper Bubble Sort technique!\nPasses completed: %d\nTime: %s" % [current_pass, format_ms(elapsed_ms)]
 		if best_time_ms < 0 or elapsed_ms < best_time_ms:
 			best_time_ms = elapsed_ms
 			save_best_time()
-			message += "
-New Best!"
+			message += "\nNew Best!"
 		elif best_time_ms >= 0:
-			message += "
-Best: %s" % format_ms(best_time_ms)
+			message += "\nBest: %s" % format_ms(best_time_ms)
 
 		await show_dialog(message)
 		celebrate_win()
@@ -227,10 +302,11 @@ func play_random_wizard_animations() -> void:
 func show_dialog_sequence() -> void:
 	var dialogs = [
 		"Welcome to Bubble Sort!",
-		"In Bubble Sort, we repeatedly swap adjacent elements if they are in the wrong order.",
-		"Select two adjacent elements to swap them.",
-		"Continue until the array is sorted in ascending order.",
-		"Your turn! Sort the array."
+		"In Bubble Sort, we make multiple passes through the array.",
+		"Each pass starts from the beginning (index 0).",
+		"We compare adjacent elements and swap if out of order.",
+		"Continue until a full pass is made with no swaps.",
+		"The highlighted elements show where to start!"
 	]
 	for dialog in dialogs:
 		await show_dialog(dialog)
@@ -311,7 +387,7 @@ func _on_reset_button_pressed() -> void:
 		dialog_box.modulate = m
 
 	generate_new_puzzle()
-	await show_dialog("Select two adjacent elements to swap if out of order.")
+	await show_dialog("Start from the beginning! Compare adjacent elements from left to right.")
 	is_interactive = true
 	start_puzzle_timer()
 

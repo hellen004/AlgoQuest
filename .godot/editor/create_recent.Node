@@ -1,3 +1,4 @@
+TextureButton
 CanvasLayer
 Label
 Panel
@@ -12,4 +13,3 @@ Button
 Camera2D
 Node2D
 CollisionPolygon2D
-TextureButton
