@@ -4,7 +4,7 @@ extends Control
 # Map button node names to scene paths
 var levels = {
 	"Button1": "res://Scenes/levels/BubbleSort/bubble_sort.tscn",
-	"Button2": "res://Scenes/levels/linear_search.tscn",
+	"Button2": "res://Scenes/levels/LinearSearch/linear_search.tscn"
 }
 
 func _ready():

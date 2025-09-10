@@ -5,6 +5,7 @@ extends Node2D
 @onready var wizard_sprite: Sprite2D = $AlgoWiz
 @onready var reset_button: TextureButton = $UIElements/UIContainer/ResetButton
 @onready var back_button: TextureButton = $UIElements/UIContainer/BackButton
+@onready var skip_button: TextureButton = $UIElements/UIContainer/SkipButton
 
 @export var number_element_scene: PackedScene
 
@@ -26,6 +27,7 @@ var current_pass: int = 0
 var next_expected_index: int = 0  # The index we expect player to start from
 var swaps_made_this_pass: int = 0
 var is_pass_complete: bool = false
+var tutorial_skipped: bool = false
 
 # ---------------- Timer / Best-time state ----------------
 var timer_label: Label = null  # Optional HUD label: UIElements/UIContainer/TimerLabel
@@ -378,6 +380,7 @@ func load_best_time() -> void:
 func _on_reset_button_pressed() -> void:
 	selected_element = null
 	is_interactive = false
+	tutorial_skipped = false  # Reset tutorial state
 
 	# Hide any dialog and reset its alpha
 	if dialog_box:
@@ -393,6 +396,24 @@ func _on_reset_button_pressed() -> void:
 
 func _on_back_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/level_selection.tscn")
+
+func _on_skip_button_pressed() -> void:
+	tutorial_skipped = true
+	is_interactive = true
+	start_puzzle_timer()
+	
+	# Hide dialog immediately
+	if dialog_box:
+		dialog_box.visible = false
+		var m = dialog_box.modulate
+		m.a = 0.0
+		dialog_box.modulate = m
+	
+	# Hide skip button
+	if skip_button:
+		skip_button.visible = false
+	
+	print("Tutorial skipped - starting gameplay")
 
 # Fallback input from basic (for debug/fix)
 func _input(event: InputEvent) -> void:

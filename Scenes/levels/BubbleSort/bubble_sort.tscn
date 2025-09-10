@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ddetl628bo4n7"]
+[gd_scene load_steps=9 format=3 uid="uid://ddetl628bo4n7"]
 
 [ext_resource type="Script" uid="uid://dr4qxdmaqn6x3" path="res://Scenes/levels/BubbleSort/bubble_sort.gd" id="1_g2ydv"]
 [ext_resource type="Texture2D" uid="uid://be1d70evrelvk" path="res://Assets/Background_Images/BS_Background.png" id="1_hwbvs"]
@@ -7,6 +7,7 @@
 [ext_resource type="FontFile" uid="uid://c3gsrcg7ch1v3" path="res://Assets/fonts/Heraldic Shadows.otf" id="3_ie40d"]
 [ext_resource type="Texture2D" uid="uid://bc25lhrfa1qv0" path="res://Assets/UI/Back_bautton.png" id="4_g2ydv"]
 [ext_resource type="Texture2D" uid="uid://bbao285qtpkbm" path="res://Assets/AlgoWiz.png" id="5_5ewd6"]
+[ext_resource type="Texture2D" uid="uid://sg4km6evln44" path="res://Assets/UI/skip_button.png" id="7_ie40d"]
 
 [node name="BubbleSort" type="Node2D"]
 script = ExtResource("1_g2ydv")
@@ -27,20 +28,20 @@ offset_bottom = 726.0
 
 [node name="ResetButton" type="TextureButton" parent="UIElements/UIContainer"]
 layout_mode = 0
-offset_left = 64.0
-offset_top = 620.0
-offset_right = 149.0
-offset_bottom = 710.0
+offset_left = 32.0
+offset_top = 608.0
+offset_right = 117.0
+offset_bottom = 698.0
 texture_normal = ExtResource("2_qskr0")
 ignore_texture_size = true
 stretch_mode = 0
 
 [node name="BackButton" type="TextureButton" parent="UIElements/UIContainer"]
 layout_mode = 0
-offset_left = 64.0
-offset_top = 64.0
-offset_right = 149.0
-offset_bottom = 154.0
+offset_left = 32.0
+offset_top = 24.0
+offset_right = 117.0
+offset_bottom = 114.0
 texture_normal = ExtResource("4_g2ydv")
 ignore_texture_size = true
 stretch_mode = 0
@@ -64,6 +65,16 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_ie40d")
 theme_override_font_sizes/font_size = 32
 text = "Timer"
+
+[node name="SkipButton" type="TextureButton" parent="UIElements/UIContainer"]
+layout_mode = 0
+offset_left = 968.0
+offset_top = 336.0
+offset_right = 1048.0
+offset_bottom = 424.0
+texture_normal = ExtResource("7_ie40d")
+ignore_texture_size = true
+stretch_mode = 0
 
 [node name="AlgoWiz" type="Sprite2D" parent="."]
 position = Vector2(136.125, 467)
@@ -101,3 +112,4 @@ text = "Abcdefghijklmnopqrstuvwx"
 
 [connection signal="pressed" from="UIElements/UIContainer/ResetButton" to="." method="_on_reset_button_pressed"]
 [connection signal="pressed" from="UIElements/UIContainer/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="UIElements/UIContainer/SkipButton" to="." method="_on_skip_button_pressed"]

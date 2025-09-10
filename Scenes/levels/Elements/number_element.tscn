@@ -22,8 +22,8 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-position = Vector2(-5.17599, 4.8678)
-scale = Vector2(0.990132, 1.00237)
+position = Vector2(-6.70484, 4.88598)
+scale = Vector2(1.10211, 1.15098)
 polygon = PackedVector2Array(-15.9817, -49.7499, 56.7359, -48.7523, 57.7458, 20.0846, 34.5166, 36.0468, -45.2707, 34.0515, -48.3006, -33.7877)
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
