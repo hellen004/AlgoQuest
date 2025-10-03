@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ddetl628bo4n7"]
+[gd_scene load_steps=11 format=3 uid="uid://ddetl628bo4n7"]
 
 [ext_resource type="Script" uid="uid://dr4qxdmaqn6x3" path="res://Scenes/levels/BubbleSort/bubble_sort.gd" id="1_g2ydv"]
 [ext_resource type="Texture2D" uid="uid://be1d70evrelvk" path="res://Assets/Background_Images/BS_Background.png" id="1_hwbvs"]
@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://bc25lhrfa1qv0" path="res://Assets/UI/Back_bautton.png" id="4_g2ydv"]
 [ext_resource type="Texture2D" uid="uid://bbao285qtpkbm" path="res://Assets/AlgoWiz.png" id="5_5ewd6"]
 [ext_resource type="Texture2D" uid="uid://sg4km6evln44" path="res://Assets/UI/skip_button.png" id="7_ie40d"]
+[ext_resource type="AudioStream" uid="uid://dhfetdbmfo6i" path="res://Assets/Sounds/roblox-minecraft-fortnite-video-game-music-358426.wav" id="9_wmi57"]
+[ext_resource type="AudioStream" uid="uid://d3j2bm8ke82y3" path="res://Assets/Sounds/woosh.wav" id="10_bc78a"]
 
 [node name="BubbleSort" type="Node2D"]
 script = ExtResource("1_g2ydv")
@@ -15,7 +17,7 @@ number_element_scene = ExtResource("2_d6r8p")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_top = -150.0
-offset_right = 1286.0
+offset_right = 1600.0
 offset_bottom = 789.0
 texture = ExtResource("1_hwbvs")
 expand_mode = 1
@@ -82,7 +84,7 @@ scale = Vector2(0.3845, 0.512)
 texture = ExtResource("5_5ewd6")
 
 [node name="ElementContainer" type="Node2D" parent="."]
-position = Vector2(300, 563)
+position = Vector2(377, 563)
 
 [node name="DialogBox" type="Control" parent="."]
 layout_mode = 3
@@ -109,6 +111,16 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_ie40d")
 theme_override_font_sizes/font_size = 40
 text = "Abcdefghijklmnopqrstuvwx"
+
+[node name="BG_sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_wmi57")
+autoplay = true
+
+[node name="woosh" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_bc78a")
+autoplay = true
+
+[node name="level_complete" type="AudioStreamPlayer2D" parent="."]
 
 [connection signal="pressed" from="UIElements/UIContainer/ResetButton" to="." method="_on_reset_button_pressed"]
 [connection signal="pressed" from="UIElements/UIContainer/BackButton" to="." method="_on_back_button_pressed"]

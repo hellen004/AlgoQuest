@@ -13,9 +13,9 @@ extends Node2D
 
 const ARRAY_SIZE: int = 8
 const ELEMENT_WIDTH: int = 120
-const ELEMENT_SPACING: int = 15
-const START_X: int = 200
-const START_Y: int = 400
+const ELEMENT_SPACING: int = 20
+const START_X: int = 350
+const START_Y: int = 200
 
 var current_array: Array[int] = []
 var number_elements: Array[Area2D] = []
@@ -26,6 +26,9 @@ var search_complete: bool = false
 var is_interactive: bool = false
 var steps_taken: int = 0
 var tutorial_skipped: bool = false
+
+# Track which numbers have been revealed (linear search specific)
+var revealed_elements: Array[bool] = []
 
 # Timer state
 var timer_label: Label = null
@@ -65,6 +68,11 @@ func generate_new_puzzle() -> void:
 	timer_running = false
 	puzzle_elapsed_ms = 0
 	update_timer_label(0)
+	
+	# Initialize revealed state for all elements
+	revealed_elements.clear()
+	for i in range(ARRAY_SIZE):
+		revealed_elements.append(false)
 
 	# Generate array with random numbers
 	current_array.clear()
@@ -72,8 +80,8 @@ func generate_new_puzzle() -> void:
 		current_array.append(randi_range(1, 99))
 
 	# Choose target - sometimes in array, sometimes not
-	if randi_range(0, 2) == 0:  # 1/3 chance target not in array
-		target_number = randi_range(100, 120)  # Number not in array
+	if randi_range(0, 1) == 0:  # 1/2 chance target not in array
+		target_number = randi_range(50, 100)  # Number not in array
 	else:
 		target_number = current_array[randi_range(0, current_array.size())]  # Pick from array
 
@@ -84,8 +92,12 @@ func generate_new_puzzle() -> void:
 		element.position = Vector2(START_X + i * (ELEMENT_WIDTH + ELEMENT_SPACING), START_Y)
 		add_child(element)
 		number_elements.append(element)
+		
+		# Set the actual number but then hide it
 		element.set_number(current_array[i])
 		element.set_random_texture()
+		# Hide the number by changing the label text to "?"
+		hide_element_number(element)
 
 	# Setup target display
 	target_label.text = "Find: " + str(target_number)
@@ -98,11 +110,38 @@ func generate_new_puzzle() -> void:
 	if skip_button:
 		skip_button.visible = not tutorial_skipped
 
+# Hide a specific element's number (linear search specific)
+func hide_element_number(element: Area2D) -> void:
+	var label = element.get_node("Label") as Label
+	if label:
+		label.text = "?"
+
+# Reveal a specific element's number (linear search specific)
+func reveal_element_number(element: Area2D) -> void:
+	var label = element.get_node("Label") as Label
+	if label:
+		var actual_number = current_array[element.element_index]
+		label.text = str(actual_number)
+		revealed_elements[element.element_index] = true
+
+# Check if an element's number is revealed
+func is_element_revealed(index: int) -> bool:
+	if index >= 0 and index < revealed_elements.size():
+		return revealed_elements[index]
+	return false
+
+# Reveal all numbers (for end of search)
+func reveal_all_numbers() -> void:
+	for i in range(number_elements.size()):
+		if not is_element_revealed(i):
+			reveal_element_number(number_elements[i])
+
 func clear_elements() -> void:
 	for element in number_elements:
 		if element and is_instance_valid(element):
 			element.queue_free()
 	number_elements.clear()
+	revealed_elements.clear()
 
 func update_pointer_position() -> void:
 	if current_index < number_elements.size():
@@ -136,6 +175,12 @@ func _on_element_clicked(element: Area2D) -> void:
 		await show_dialog("Linear search checks elements in order! Click the highlighted element (index " + str(current_index) + ").")
 		return
 
+	# Reveal the number when clicked (linear search specific behavior)
+	reveal_element_number(element)
+	
+	# Add a small delay to show the revealed number before continuing
+	await get_tree().create_timer(0.5).timeout
+	
 	# Check current element
 	check_current_element()
 
@@ -150,6 +195,8 @@ func check_current_element() -> void:
 		# Found the target!
 		found_index = current_index
 		search_complete = true
+		# Highlight the found element with a special color
+		number_elements[current_index].modulate = Color(0.2, 1.0, 0.2)  # Green
 		await show_dialog("Found! Target " + str(target_number) + " is at index " + str(current_index) + "!")
 		handle_search_complete()
 	else:
@@ -170,12 +217,13 @@ func handle_search_complete() -> void:
 	is_interactive = false
 	var elapsed_ms = stop_puzzle_timer()
 	
+	# Reveal all remaining numbers for final view
+	reveal_all_numbers()
+	
 	# Build completion message
 	var message = ""
 	if found_index >= 0:
 		message = "Success! Found " + str(target_number) + " at index " + str(found_index) + "!\n"
-		# Highlight found element
-		number_elements[found_index].modulate = Color(0.2, 1.0, 0.2)  # Green
 	else:
 		message = "Target not found after checking all elements.\n"
 	
@@ -222,12 +270,12 @@ func show_dialog_sequence() -> void:
 		skip_button.visible = true
 
 	var dialogs = [
-		"Welcome to Linear Search!",
-		"We search for a target by checking each element one by one.",
-		"Start from index 0 and check elements in order.",
-		"Compare each element with the target: " + str(target_number),
-		"Continue until found or reach the end of the array.",
-		"Click the highlighted element to check it!"
+		"Welcome to Linear Search with Hidden Numbers!",
+		"Numbers are hidden behind '?' symbols.",
+		"Click elements in order to reveal their values.",
+		"We search for the target: " + str(target_number),
+		"Start from index 0 and check elements sequentially.",
+		"Click the highlighted element to reveal and check it!"
 	]
 	
 	for dialog in dialogs:
@@ -349,7 +397,7 @@ func _on_reset_button_pressed() -> void:
 		dialog_box.modulate = m
 
 	generate_new_puzzle()
-	await show_dialog("New search puzzle generated! Click the highlighted elements in order to search.")
+	await show_dialog("New search puzzle generated! Click the highlighted elements in order to reveal and search.")
 	is_interactive = true
 	start_puzzle_timer()
 

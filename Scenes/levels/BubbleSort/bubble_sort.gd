@@ -6,13 +6,15 @@ extends Node2D
 @onready var reset_button: TextureButton = $UIElements/UIContainer/ResetButton
 @onready var back_button: TextureButton = $UIElements/UIContainer/BackButton
 @onready var skip_button: TextureButton = $UIElements/UIContainer/SkipButton
+@onready var woosh_sound: AudioStreamPlayer2D = $woosh
+@onready var level_complete_sound: AudioStreamPlayer2D = $level_complete
 
 @export var number_element_scene: PackedScene
 
 const ARRAY_SIZE: int = 5
 const ELEMENT_WIDTH: int = 150  # Adjust based on your sprite size
-const ELEMENT_SPACING: int = 20
-const START_X: int = 300  # Adjust for centering if needed
+const ELEMENT_SPACING: int = 25
+const START_X: int = 400  # Adjust for centering if needed
 const START_Y: int = 563
 
 var current_array: Array[int] = []
@@ -48,11 +50,13 @@ func _ready() -> void:
 	if not back_button.pressed.is_connected(_on_back_button_pressed):
 		back_button.pressed.connect(_on_back_button_pressed)
 
+
 	load_best_time()
 	update_timer_label(0)
 
 	generate_new_puzzle()
 	show_dialog_sequence()
+
 
 func generate_new_puzzle() -> void:
 	clear_elements()
@@ -100,25 +104,28 @@ func clear_elements() -> void:
 func highlight_expected_pair() -> void:
 	# Clear all highlights first
 	for element in number_elements:
-		element.highlight(false)
+		if element and is_instance_valid(element):
+			element.modulate = Color.WHITE
 	
 	# Highlight the next expected pair if we're not done
 	if next_expected_index < ARRAY_SIZE - 1 - current_pass and next_expected_index < number_elements.size() - 1:
-		if number_elements[next_expected_index] and is_instance_valid(number_elements[next_expected_index]):
+		# Check first element
+		if next_expected_index < number_elements.size() and number_elements[next_expected_index] and is_instance_valid(number_elements[next_expected_index]):
 			number_elements[next_expected_index].modulate = Color(1.2, 1.2, 0.8)  # Slight yellow tint
-		if number_elements[next_expected_index + 1] and is_instance_valid(number_elements[next_expected_index + 1]):
+		# Check second element
+		if next_expected_index + 1 < number_elements.size() and number_elements[next_expected_index + 1] and is_instance_valid(number_elements[next_expected_index + 1]):
 			number_elements[next_expected_index + 1].modulate = Color(1.2, 1.2, 0.8)
 
-func _on_element_clicked(element: Area2D) -> void:
+func _on_element_clicked(element: Area2D):
 	if not is_interactive:
 		return
 
 	if selected_element == null:
 		selected_element = element
-		element.highlight(true)
+		element.modulate = Color(1.5, 1.5, 1.0)  # Or whatever highlight color you want
 	else:
 		if selected_element == element:
-			selected_element.highlight(false)
+			selected_element.modulate = Color.WHITE
 			selected_element = null
 			return
 
@@ -128,7 +135,7 @@ func _on_element_clicked(element: Area2D) -> void:
 		# Check if they selected adjacent elements
 		if second_index - first_index != 1:
 			await show_dialog("You can only swap adjacent pairs!")
-			selected_element.highlight(false)
+			selected_element.modulate = Color.WHITE
 			selected_element = null
 			return
 
@@ -141,7 +148,7 @@ func _on_element_clicked(element: Area2D) -> void:
 				pass_text = "pass " + str(current_pass + 1)
 			
 			await show_dialog("In Bubble Sort, you must start from the beginning!\nFor the " + pass_text + ", start comparing from index 0.")
-			selected_element.highlight(false)
+			selected_element.modulate = Color.WHITE
 			selected_element = null
 			return
 
@@ -168,15 +175,16 @@ func _on_element_clicked(element: Area2D) -> void:
 		else:
 			highlight_expected_pair()
 
-		selected_element.highlight(false)
+		selected_element.modulate = Color.WHITE
 		selected_element = null
 
 func complete_pass() -> void:
 	current_pass += 1
 	
-	# Clear highlights
+	# Clear highlights - only call on valid elements
 	for element in number_elements:
-		element.modulate = Color.WHITE
+		if element and is_instance_valid(element):
+			element.modulate = Color.WHITE
 	
 	if swaps_made_this_pass == 0:
 		# No swaps made - array is sorted!
@@ -200,6 +208,9 @@ func is_array_sorted() -> bool:
 	return true
 
 func swap_elements(i: int, j: int) -> void:
+	# Play woosh sound
+	woosh_sound.play()
+
 	var temp = current_array[i]
 	current_array[i] = current_array[j]
 	current_array[j] = temp
@@ -229,6 +240,7 @@ func swap_elements(i: int, j: int) -> void:
 	element_i.scale = Vector2.ONE
 	element_j.scale = Vector2.ONE
 
+# Helper for swap animation
 func animate_arc(progress: float, element: Area2D, start_pos: Vector2, end_pos: Vector2, control_y: float) -> void:
 	var mid_x = (start_pos.x + end_pos.x) / 2.0
 	var t = progress
@@ -240,10 +252,14 @@ func animate_arc(progress: float, element: Area2D, start_pos: Vector2, end_pos: 
 	var scale_factor = 1.0 + sin(t * PI) * 0.2
 	element.scale = Vector2(scale_factor, scale_factor)
 
+# Add check_win_condition function
 func check_win_condition() -> void:
 	if is_array_sorted():
 		is_interactive = false
 		var elapsed_ms = stop_puzzle_timer()
+
+		# Play level complete sound
+		level_complete_sound.play()
 
 		# Build win message with timing + best
 		var message := "Excellent! You've sorted the array using proper Bubble Sort technique!\nPasses completed: %d\nTime: %s" % [current_pass, format_ms(elapsed_ms)]
@@ -260,6 +276,7 @@ func check_win_condition() -> void:
 		for element in number_elements:
 			element.modulate = Color.WHITE
 
+# Win celebration animation for sorted array
 func celebrate_win() -> void:
 	for element in number_elements:
 		var tween = create_tween()
@@ -268,7 +285,7 @@ func celebrate_win() -> void:
 		tween.tween_property(element, "modulate", Color(1, 1, 0), 0.5)
 		tween.tween_property(element, "modulate", Color.WHITE, 0.5)
 
-# ---------------- Wizard Animations ----------------
+# Add the missing wizard animation functions
 func animate_wizard_talk() -> void:
 	var tween = create_tween()
 	tween.set_loops(3)
@@ -419,13 +436,25 @@ func _on_skip_button_pressed() -> void:
 func _input(event: InputEvent) -> void:
 	if not is_interactive:
 		return
+
+	# --- Android Back Button Support ---
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_BACK or event.keycode == KEY_ESCAPE:
+			_on_back_button_pressed()
+			get_tree().set_input_as_handled()
+			return
+
+	# --- Touch/Mouse Input for Elements ---
 	if (event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT) or \
 	   (event is InputEventScreenTouch and event.pressed):
 		var click_pos = event.position
 		for element in number_elements:
-			var local_pos = element.to_local(click_pos)
-			var rect = element.get_node("Sprite2D").get_rect()  # Adjust if sprite name differs
-			if rect.has_point(local_pos):
+			var sprite = element.get_node("Sprite2D")
+			# Use global position and texture size for accurate hitbox
+			var sprite_pos = sprite.get_global_position()
+			var sprite_size = sprite.texture.get_size() if sprite.texture else Vector2.ZERO
+			var rect = Rect2(sprite_pos - sprite_size * 0.5, sprite_size)
+			if rect.has_point(click_pos):
 				_on_element_clicked(element)
 				break
 
