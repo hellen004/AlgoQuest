@@ -1,7 +1,0 @@
-res://Scenes/levels/LinearSearch/linear_search.tscn
-res://Scenes/levels/LinearSearch/LinearSearch.gd
-res://Scenes/levels/BubbleSort/bubble_sort.gd
-res://Scenes/levels/BubbleSort/bubble_sort.tscn
-res://Scenes/level_selection.tscn
-res://Scenes/levels/Elements/number_element.tscn
-res://Scenes/Main.tscn
