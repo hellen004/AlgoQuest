@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=1600
+window/size/viewport_width=1280
 window/size/viewport_height=720
 window/stretch/mode="viewport"
 
@@ -45,14 +45,8 @@ back={
 "events": []
 }
 
-[input_devices]
-
-pointing/android/enable_long_press_as_right_click=true
-pointing/emulate_touch_from_mouse=true
-
 [rendering]
 
-renderer/rendering_method="gl_compatibility"
-renderer/rendering_method.mobile="gl_compatibility"
+renderer/rendering_method="mobile"
 textures/vram_compression/import_etc2_astc=true
 2d/snap/snap_2d_transforms_to_pixel=true

@@ -9,39 +9,35 @@ AlgoQuest helps students understand fundamental algorithms through visual, inter
 ## 🚀 Current Features
 
 - Bubble Sort level with interactive number swapping
-- **Linear Search level with interactive element selection**
 - Wizard-guided tutorial system
 - Random array generation
 - Visual feedback and animations
-- **Sound effects for actions and level completion**
 - Mobile-friendly touch controls
 
 ## 🛠️ Built With
 
 - **Godot Engine 4.4.1**
 - GDScript
-- Designed for Android mobile devices
+- Designed for Android/iOS mobile devices
 
 ## 📋 Algorithms Implemented
 
 - [x] Bubble Sort
-- [x] Linear Search
 - [ ] Selection Sort (planned)
+- [ ] Linear Search (planned)
 - [ ] Binary Search (planned)
 - [ ] Graph Traversal (planned)
 
 ## 🎮 How to Play
 
-1. Click adjacent numbers to swap them (Bubble Sort)
-2. **Tap numbers to find the target value (Linear Search)**
-3. Sort the array in ascending order
-4. Follow the wizard's instructions
-5. Complete levels with minimum moves
+1. Click adjacent numbers to swap them
+2. Sort the array in ascending order
+3. Follow the wizard's instructions
+4. Complete levels with minimum moves
 
 ## 🔧 Installation
 
 1. Clone the repository:
 ```bash
 git clone https://github.com/hellen004/AlgoQuest.git
-```
 
